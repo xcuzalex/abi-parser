@@ -1,0 +1,83 @@
+{
+  "functions": [
+    {
+      "name": "balanceOf",
+      "signature": "balanceOf(address)",
+      "selector": "0x70a08231",
+      "definition": "function balanceOf(address owner) view returns (uint256)",
+      "stateMutability": "view"
+    },
+    {
+      "name": "transfer",
+      "signature": "transfer(address,uint256)",
+      "selector": "0xa9059cbb",
+      "definition": "function transfer(address to, uint256 amount) returns (bool)",
+      "stateMutability": "nonpayable"
+    },
+    {
+      "name": "approve",
+      "signature": "approve(address,uint256)",
+      "selector": "0x095ea7b3",
+      "definition": "function approve(address spender, uint256 amount) returns (bool)",
+      "stateMutability": "nonpayable"
+    },
+    {
+      "name": "mint",
+      "signature": "mint(address,uint256)",
+      "selector": "0x40c10f19",
+      "definition": "function mint(address to, uint256 amount) payable",
+      "stateMutability": "payable"
+    },
+    {
+      "name": "calculateHash",
+      "signature": "calculateHash(bytes32)",
+      "selector": "0xda73955f",
+      "definition": "function calculateHash(bytes32 data) pure returns (bytes32)",
+      "stateMutability": "pure"
+    }
+  ],
+  "events": [
+    {
+      "name": "Transfer",
+      "signature": "Transfer(address,address,uint256)",
+      "topic": "0xddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef",
+      "definition": "event Transfer(address from indexed, address to indexed, uint256 value)",
+      "anonymous": false
+    },
+    {
+      "name": "Approval",
+      "signature": "Approval(address,address,uint256)",
+      "topic": "0x8c5be1e5ebec7d5bd14f71427d1e84f3dd0314c0f7b2291e5b200ac8c7c3b925",
+      "definition": "event Approval(address owner indexed, address spender indexed, uint256 value)",
+      "anonymous": false
+    },
+    {
+      "name": "Debug",
+      "signature": "Debug(string)",
+      "topic": "0x7cdb51e9dbbc205231228146c3246e7f914aa6d4a33170e43ecc8e3593481d1a",
+      "definition": "event Debug(string message) anonymous",
+      "anonymous": true
+    }
+  ],
+  "errors": [
+    {
+      "name": "InsufficientBalance",
+      "signature": "InsufficientBalance(uint256,uint256)",
+      "selector": "0xcf479181",
+      "definition": "error InsufficientBalance(uint256 available, uint256 required)"
+    },
+    {
+      "name": "InvalidAddress",
+      "signature": "InvalidAddress()",
+      "selector": "0xe6c4247b",
+      "definition": "error InvalidAddress()"
+    }
+  ],
+  "function_count": 5,
+  "event_count": 3,
+  "error_count": 2,
+  "view_function_count": 1,
+  "pure_function_count": 1,
+  "payable_function_count": 1,
+  "nonpayable_function_count": 2
+}

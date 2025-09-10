@@ -1,0 +1,21 @@
+[package]
+name = "abi-parser"
+version = "0.1.0"
+edition = "2021"
+description = "A Rust command-line tool for analyzing Ethereum Smart Contract ABI files"
+authors = ["xcuzalex <xcuzalex@gmail.com>"]
+license = "MIT"
+repository = "https://github.com/xcuzalex/abi-parser"
+keywords = ["ethereum", "blockchain", "abi", "smart-contracts", "cli"]
+categories = ["command-line-utilities", "cryptography"]
+readme = "README.md"
+
+[[bin]]
+name = "abi-parser"
+path = "src/main.rs"
+
+[dependencies]
+serde = { version = "1.0.218", features = ["derive"] }
+serde_json = "1.0.140"
+tiny-keccak = { version = "2.0.2", features = ["keccak"] }
+hex = "0.4.3"
