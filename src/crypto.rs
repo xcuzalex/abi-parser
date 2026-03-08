@@ -1,4 +1,3 @@
-use hex;
 use tiny_keccak::{Hasher, Keccak};
 
 /// Calculate Keccak256 hash of the input data

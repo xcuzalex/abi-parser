@@ -1,18 +1,51 @@
 use serde::{Deserialize, Serialize};
 
+/// ABI item type
+#[derive(Debug, Clone, PartialEq, Eq, Deserialize, Serialize)]
+#[serde(rename_all = "lowercase")]
+pub enum ItemType {
+    Function,
+    Event,
+    Error,
+    Constructor,
+    Fallback,
+    Receive,
+}
+
+/// Function state mutability
+#[derive(Debug, Clone, PartialEq, Eq, Deserialize, Serialize)]
+#[serde(rename_all = "lowercase")]
+pub enum StateMutability {
+    Pure,
+    View,
+    Payable,
+    Nonpayable,
+}
+
+impl std::fmt::Display for StateMutability {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            StateMutability::Pure => write!(f, "pure"),
+            StateMutability::View => write!(f, "view"),
+            StateMutability::Payable => write!(f, "payable"),
+            StateMutability::Nonpayable => write!(f, "nonpayable"),
+        }
+    }
+}
+
 /// Represents an ABI item (function, event, error, etc.)
 #[derive(Debug, Clone, Deserialize, Serialize)]
 pub struct AbiItem {
     #[serde(default)]
     pub name: String,
     #[serde(rename = "type")]
-    pub item_type: String,
+    pub item_type: ItemType,
     #[serde(default)]
     pub inputs: Vec<AbiInput>,
     #[serde(default)]
     pub anonymous: Option<bool>,
     #[serde(rename = "stateMutability", default)]
-    pub state_mutability: Option<String>,
+    pub state_mutability: Option<StateMutability>,
     #[serde(default)]
     pub outputs: Option<Vec<AbiOutput>>,
 }
@@ -64,7 +97,7 @@ pub struct FunctionInfo {
     pub selector: String,
     pub definition: String,
     #[serde(rename = "stateMutability")]
-    pub state_mutability: String,
+    pub state_mutability: StateMutability,
 }
 
 /// Information about an event in the ABI

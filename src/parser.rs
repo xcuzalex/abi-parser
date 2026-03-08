@@ -3,7 +3,7 @@ use crate::signatures::{
     create_error_definition, create_event_definition, create_function_definition,
     get_function_signature,
 };
-use crate::types::{AbiItem, AbiStats, ErrorInfo, EventInfo, FunctionInfo};
+use crate::types::{AbiItem, AbiStats, ErrorInfo, EventInfo, FunctionInfo, ItemType, StateMutability};
 
 /// Parse ABI items and generate comprehensive statistics
 /// 
@@ -24,32 +24,36 @@ pub fn parse_abi_items(abi: Vec<AbiItem>) -> AbiStats {
     let mut nonpayable_count = 0;
 
     for item in abi {
-        match item.item_type.as_str() {
-            "function" => {
+        match item.item_type {
+            ItemType::Function => {
                 let function_info = process_function_item(&item, &mut view_count, &mut pure_count, &mut payable_count, &mut nonpayable_count);
                 functions.push(function_info);
             }
-            "event" => {
+            ItemType::Event => {
                 let event_info = process_event_item(&item);
                 events.push(event_info);
             }
-            "error" => {
+            ItemType::Error => {
                 let error_info = process_error_item(&item);
                 errors.push(error_info);
             }
             _ => {
-                // Skip unknown item types (constructor, fallback, receive, etc.)
+                // Skip other item types (constructor, fallback, receive)
             }
         }
     }
 
+    let function_count = functions.len();
+    let event_count = events.len();
+    let error_count = errors.len();
+
     AbiStats {
-        functions: functions.clone(),
-        events: events.clone(),
-        errors: errors.clone(),
-        function_count: functions.len(),
-        event_count: events.len(),
-        error_count: errors.len(),
+        functions,
+        events,
+        errors,
+        function_count,
+        event_count,
+        error_count,
         view_function_count: view_count,
         pure_function_count: pure_count,
         payable_function_count: payable_count,
@@ -81,14 +85,14 @@ fn process_function_item(
     let state_mutability = item
         .state_mutability
         .clone()
-        .unwrap_or_else(|| "nonpayable".to_string());
+        .unwrap_or(StateMutability::Nonpayable);
 
     // Count function types by state mutability
-    match state_mutability.as_str() {
-        "view" => *view_count += 1,
-        "pure" => *pure_count += 1,
-        "payable" => *payable_count += 1,
-        _ => *nonpayable_count += 1,
+    match state_mutability {
+        StateMutability::View => *view_count += 1,
+        StateMutability::Pure => *pure_count += 1,
+        StateMutability::Payable => *payable_count += 1,
+        StateMutability::Nonpayable => *nonpayable_count += 1,
     }
 
     // Create complete function definition for display
