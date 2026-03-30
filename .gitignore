@@ -18,3 +18,7 @@ Thumbs.db
 
 # Test files (optional, but keep examples)
 test_*.json
+
+# Whiteboard app
+whiteboard-app/node_modules/
+whiteboard-app/dist/
